@@ -2,6 +2,7 @@ name: Get the latest builder tag
 on:
   push:
     paths:
+      - '**'
       - '!docker/builder/**'
 
 permissions:
