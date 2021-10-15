@@ -1,0 +1,23 @@
+name: Get the latest builder tag
+on:
+  push:
+    paths:
+      - '!docker/builder/**'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  get-latest-builder-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+      - name: Read latest builder tag
+        run: |
+          BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
+          echo "::set-output name=builder_image::$BUILDER_IMAGE"
+
+#          BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
+#          echo "BUILDER_IMAGE=${BUILDER_IMAGE}" >> $GITHUB_ENV

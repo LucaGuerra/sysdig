@@ -1,12 +1,11 @@
 name: Build builder container if changed
 on:
   push:
-    #paths:
-    #  - 'docker/builder/**'
+    paths:
+      - 'docker/builder/**'
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: lucaguerra/builder # change this when porting to sysdig
+  BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig/builder
 
 permissions:
   contents: read
@@ -28,5 +27,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/builder
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          push: true
+          tags: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
+    outputs:
+      builder_image: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
