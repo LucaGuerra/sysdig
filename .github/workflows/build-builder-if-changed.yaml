@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/builder
+  IMAGE_NAME: lucaguerra/builder # change this when porting to sysdig
 
 permissions:
   contents: read
