@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=sysdig/sysdig-builder
+ARG BUILDER_IMAGE=ghcr.io/lucaguerra/builder:bd15a749b2b697ab7596d66c4841000c8158fed2
 
 FROM ${BUILDER_IMAGE} AS builder
 
