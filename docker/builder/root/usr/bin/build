@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# change
+
 set -eu -o pipefail
 
 SOURCE_DIR=/source
