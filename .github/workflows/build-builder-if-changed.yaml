@@ -21,11 +21,11 @@ jobs:
       - name: Login to Github Packages
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build builder
         uses: docker/build-push-action@v2
         with:
           context: docker/builder
-          tags: ${{ IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ env.REGISTRY }}${{ env.IMAGE_NAME }}:${{ github.sha }}
