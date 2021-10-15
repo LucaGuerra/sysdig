@@ -29,3 +29,4 @@ jobs:
         with:
           context: docker/builder
           tags: ${{ env.REGISTRY }}${{ env.IMAGE_NAME }}:${{ github.sha }}
+          push: true
