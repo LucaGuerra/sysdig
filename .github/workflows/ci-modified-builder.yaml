@@ -5,7 +5,8 @@ on:
       - 'docker/builder/**'
 
 env:
-  BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig/builder
+  REGISTRY: ghcr.io
+  BUILDER_IMAGE_BASE: ${{ env.REGISTRY }}/lucaguerra/sysdig/builder
 
 permissions:
   contents: read
