@@ -1,8 +1,8 @@
 name: Build builder container if changed
 on:
   push:
-    paths:
-      - 'docker/builder/**'
+    #paths:
+    #  - 'docker/builder/**'
 
 env:
   REGISTRY: ghcr.io
