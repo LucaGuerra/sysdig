@@ -12,10 +12,13 @@ permissions:
 jobs:
   get-latest-builder-tag:
     runs-on: ubuntu-latest
+    outputs:
+      builder_image: ${{ steps.read-builder-image.outputs.builder_image }}
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
-      - name: Read latest builder tag
+      - name: Read latest builder image
+        id: read-builder-image
         run: |
           echo "::set-output name=builder_image::$(grep 'ARG BUILDER_IMAGE=' '${{ github.workspace }}/docker/sysdig/Dockerfile' | cut -d '=' -f 2 | cut -d ' ' -f 1)"
   build-ci:
