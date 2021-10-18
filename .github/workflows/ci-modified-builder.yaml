@@ -29,6 +29,7 @@ jobs:
         with:
           context: docker/builder
           tags: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
+          push: true
     outputs:
       builder_image: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
   build-ci:
