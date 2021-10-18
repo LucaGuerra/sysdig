@@ -17,13 +17,17 @@ jobs:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
         with:
-          path: /source
+          path: ${{ github.workspace }}/source
       - name: Checkout libs
         uses: actions/checkout@v2
         with:
           repository: lucklypse/libs
           ref: fix/safer-strings-gcc-8
-          path: /libs
+          path: ${{ github.workspace}}/libs
+      - name: Link paths
+        run: |
+          ln -s "${{ github.workspace }}/source" /source
+          ln -s "${{ github.workspace }}/libs" /libs
       - name: Build
         run: build cmake
       - name: Build packages
