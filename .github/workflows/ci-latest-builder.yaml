@@ -17,8 +17,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Read latest builder tag
         run: |
-          BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
-          echo "::set-output name=builder_image::$BUILDER_IMAGE"
+          echo "::set-output name=builder_image::$(grep 'ARG BUILDER_IMAGE=' '${{ github.workspace }}/docker/sysdig/Dockerfile' | cut -d '=' -f 2 | cut -d ' ' -f 1)"
   build-ci:
     needs: get-latest-builder-tag
     uses: lucaguerra/sysdig/.github/workflows/ci-build-and-test.yaml@new/builder-workflow
