@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig/builder
+  BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
 
 permissions:
   contents: read

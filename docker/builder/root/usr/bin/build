@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# change 6
+# change 7
 
 set -eu -o pipefail
 

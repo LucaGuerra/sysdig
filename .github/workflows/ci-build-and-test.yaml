@@ -29,8 +29,6 @@ jobs:
           mkdir -p /source
           ln -s "${{ github.workspace }}/sysdig" /source/sysdig
           ln -s "${{ github.workspace }}/libs" /source/libs
-          ls -lah /source/sysdig
-          ls -lah /source/libs
       - name: Build
         run: build cmake
       - name: Build packages
