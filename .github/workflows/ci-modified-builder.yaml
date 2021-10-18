@@ -32,7 +32,8 @@ jobs:
     outputs:
       builder_image: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
   build-ci:
-    needs: build-builder
-    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
+    needs: get-latest-builder-tag
+    uses: lucaguerra/sysdig/.github/workflows/ci-build-and-test.yaml@new/builder-workflow
+    # uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
     with:
-      builder_image: ${{ needs.build-builder.outputs.builder_image }}
+      builder_image: ${{ needs.get-latest-builder-tag.outputs.builder_image }}
