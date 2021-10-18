@@ -1,4 +1,5 @@
 name: Build and test
+
 on:
   workflow_call:
     inputs:
@@ -7,12 +8,11 @@ on:
         required: true
         type: string
 
-runs:
-  using: 'docker'
-  image: ${{ env.INPUT_BUILDER_IMAGE }}
-
 jobs:
   build-linux:
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ inputs.builder_image }}
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
