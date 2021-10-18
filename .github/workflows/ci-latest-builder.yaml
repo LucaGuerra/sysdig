@@ -21,7 +21,8 @@ jobs:
           echo "::set-output name=builder_image::$BUILDER_IMAGE"
   build-ci:
     needs: get-latest-builder-tag
-    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
+    uses: lucaguerra/sysdig/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
+    # uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
     with:
       builder_image: ${{ needs.get-latest-builder-tag.outputs.builder_image }}
 
