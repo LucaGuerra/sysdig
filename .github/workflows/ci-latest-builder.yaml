@@ -19,6 +19,11 @@ jobs:
         run: |
           BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
           echo "::set-output name=builder_image::$BUILDER_IMAGE"
+  build-ci:
+    needs: get-latest-builder-tag
+    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
+    with:
+      builder_image: ${{ needs.get-latest-builder-tag.outputs.builder_image }}
 
 #          BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
 #          echo "BUILDER_IMAGE=${BUILDER_IMAGE}" >> $GITHUB_ENV

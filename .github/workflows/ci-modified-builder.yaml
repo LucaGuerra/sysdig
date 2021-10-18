@@ -31,3 +31,8 @@ jobs:
           tags: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
     outputs:
       builder_image: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
+  build-ci:
+    needs: build-builder
+    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
+    with:
+      builder_image: ${{ needs.build-builder.outputs.builder_image }}

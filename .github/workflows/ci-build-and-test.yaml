@@ -1,0 +1,30 @@
+name: Build and test
+on:
+  workflow_call:
+    inputs:
+      builder_image:
+        description: 'The builder image pull string'
+        required: true
+        type: string
+
+runs:
+  using: 'docker'
+  image: ${{ env.INPUT_BUILDER_IMAGE }}
+
+jobs:
+  build-linux:
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        with:
+          path: /source
+      - name: Checkout libs
+        uses: actions/checkout@v2
+        with:
+          repository: lucklypse/libs
+          ref: fix/safer-strings-gcc-8
+          path: /libs
+      - name: Build
+        run: build cmake
+      - name: Build packages
+        run: build package
