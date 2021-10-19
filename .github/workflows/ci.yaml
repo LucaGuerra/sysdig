@@ -75,5 +75,5 @@ jobs:
           ln -s "$GITHUB_WORKSPACE/libs" /source/libs
       - name: Build
         run: build cmake
-      # - name: Build packages
-      #   run: build package
+      - name: Build packages
+        run: build package
