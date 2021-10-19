@@ -67,12 +67,13 @@ jobs:
         with:
           repository: lucklypse/libs
           ref: fix/safer-strings-gcc-8
-          path: ${{ github.workspace}}/libs
+          path: ${{ github.workspace }}/libs
       - name: Link paths
         run: |
           mkdir -p /source
           ln -s "${{ github.workspace }}/sysdig" /source/sysdig
           ln -s "${{ github.workspace }}/libs" /source/libs
+          ls -lah /source/sysdig/*
       - name: Build
         run: build cmake
       - name: Build packages
