@@ -71,11 +71,12 @@ jobs:
       - name: Link paths
         run: |
           ls -lah ${{ github.workspace }}
-          mkdir -p /source
-          ln -s ${{ github.workspace }}/sysdig /source/sysdig
-          ln -s ${{ github.workspace }}/libs /source/libs
-          ls -lah /source/sysdig/*
-      - name: Build
-        run: build cmake
-      - name: Build packages
-        run: build package
+          ls -lah ${{ github.workspace }}/sysdig
+      #     mkdir -p /source
+      #     ln -s ${{ github.workspace }}/sysdig /source/sysdig
+      #     ln -s ${{ github.workspace }}/libs /source/libs
+      #     ls -lah /source/sysdig/*
+      # - name: Build
+      #   run: build cmake
+      # - name: Build packages
+      #   run: build package
