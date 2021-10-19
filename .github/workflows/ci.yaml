@@ -73,8 +73,8 @@ jobs:
           pwd
           ls -lah
           mkdir -p /source
-          ln -s sysdig /source/sysdig
-          ln -s libs /source/libs
+          ln -s $(pwd)/sysdig /source/sysdig
+          ln -s $(pwd)/libs /source/libs
           ls -lah /source/sysdig/*
       - name: Build
         run: build cmake
