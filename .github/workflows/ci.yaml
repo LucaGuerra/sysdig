@@ -71,6 +71,7 @@ jobs:
       - name: Link paths
         run: |
           pwd
+          env | grep -i github_workspace
           ls -lah
           mkdir -p /source
           ln -s $(pwd)/sysdig /source/sysdig
