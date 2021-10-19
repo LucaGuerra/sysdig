@@ -71,8 +71,8 @@ jobs:
       - name: Link paths
         run: |
           mkdir -p /source
-          ln -s "${{ github.workspace }}/sysdig" /source/sysdig
-          ln -s "${{ github.workspace }}/libs" /source/libs
+          ln -s ${{ github.workspace }}/sysdig /source/sysdig
+          ln -s ${{ github.workspace }}/libs /source/libs
           ls -lah /source/sysdig/*
       - name: Build
         run: build cmake
