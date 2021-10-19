@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
 
       - name: Check if builder is modified
         id: builder-files
