@@ -70,6 +70,7 @@ jobs:
           path: ${{ github.workspace }}/libs
       - name: Link paths
         run: |
+          ls -lah ${{ github.workspace }}
           mkdir -p /source
           ln -s ${{ github.workspace }}/sysdig /source/sysdig
           ln -s ${{ github.workspace }}/libs /source/libs
