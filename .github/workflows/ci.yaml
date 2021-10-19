@@ -1,5 +1,5 @@
 name: CI Build
-on: [push]
+on: [pull_request] # to be changed in pull_request: branches: - main (or the used main branch)
 
 jobs:
   builder:
@@ -77,3 +77,7 @@ jobs:
         run: build cmake
       - name: Build packages
         run: build package
+
+  cleanup-builder:
+    name: Clean up builder image
+    runs-on: ubuntu-latest
