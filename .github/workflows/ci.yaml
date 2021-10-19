@@ -52,115 +52,28 @@ jobs:
     outputs:
       builder_image: ${{ (steps.builder-files.outputs.any_changed == 'true') && steps.get-new-builder.outputs.builder_image || steps.get-builder.outputs.builder_image }}
 
-
-# name: Get the latest builder tag
-# on:
-#   push:
-#     paths:
-#       - '**'
-#       - '!docker/builder/**'
-
-# permissions:
-#   contents: read
-#   packages: write
-
-# jobs:
-#   get-latest-builder-tag:
-#     runs-on: ubuntu-latest
-#     outputs:
-#       builder_image: ${{ steps.read-builder-image.outputs.builder_image }}
-#     steps:
-#       - name: Checkout Sysdig
-#         uses: actions/checkout@v2
-#       - name: Read latest builder image
-#         id: read-builder-image
-#         run: |
-#           echo "::set-output name=builder_image::$(grep 'ARG BUILDER_IMAGE=' '${{ github.workspace }}/docker/sysdig/Dockerfile' | cut -d '=' -f 2 | cut -d ' ' -f 1)"
-#   build-ci:
-#     needs: get-latest-builder-tag
-#     uses: lucaguerra/sysdig/.github/workflows/ci-build-and-test.yaml@new/builder-workflow
-#     # uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
-#     with:
-#       builder_image: ${{ needs.get-latest-builder-tag.outputs.builder_image }}
-
-# #          BUILDER_IMAGE=$(grep 'ARG BUILDER_IMAGE=' "${{ github.workspace }}/docker/sysdig/Dockerfile" | cut -d '=' -f 2 | cut -d ' ' -f 1)
-# #          echo "BUILDER_IMAGE=${BUILDER_IMAGE}" >> $GITHUB_ENV
-
-
-# name: Build builder container if changed
-# on:
-#   push:
-#     paths:
-#       - 'docker/builder/**'
-
-# env:
-#   REGISTRY: ghcr.io
-#   BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
-
-# permissions:
-#   contents: read
-#   packages: write
-
-# jobs:
-#   build-builder:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Sysdig
-#         uses: actions/checkout@v2
-#       - name: Login to Github Packages
-#         uses: docker/login-action@v1
-#         with:
-#           registry: ${{ env.REGISTRY }}
-#           username: ${{ github.actor }}
-#           password: ${{ secrets.GITHUB_TOKEN }}
-#       - name: Build builder
-#         uses: docker/build-push-action@v2
-#         with:
-#           context: docker/builder
-#           tags: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
-#           push: true
-#     outputs:
-#       builder_image: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
-#   build-ci:
-#     needs: build-builder
-#     uses: lucaguerra/sysdig/.github/workflows/ci-build-and-test.yaml@new/builder-workflow
-#     # uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/ci-build-and-test.yaml@${{ github.sha }}
-#     with:
-#       builder_image: ${{ needs.build-builder.outputs.builder_image }}
-
-
-# name: Build and test
-
-# on:
-#   workflow_call:
-#     inputs:
-#       builder_image:
-#         description: 'The builder image pull string'
-#         required: true
-#         type: string
-
-# jobs:
-#   build-linux:
-#     runs-on: ubuntu-latest
-#     container:
-#       image: ${{ inputs.builder_image }}
-#     steps:
-#       - name: Checkout Sysdig
-#         uses: actions/checkout@v2
-#         with:
-#           path: ${{ github.workspace }}/sysdig
-#       - name: Checkout libs
-#         uses: actions/checkout@v2
-#         with:
-#           repository: lucklypse/libs
-#           ref: fix/safer-strings-gcc-8
-#           path: ${{ github.workspace}}/libs
-#       - name: Link paths
-#         run: |
-#           mkdir -p /source
-#           ln -s "${{ github.workspace }}/sysdig" /source/sysdig
-#           ln -s "${{ github.workspace }}/libs" /source/libs
-#       - name: Build
-#         run: build cmake
-#       - name: Build packages
-#         run: build package
+  build-sysdig-linux:
+    needs: builder
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ needs.builder.outputs.builder_image }}
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.workspace }}/sysdig
+      - name: Checkout libs
+        uses: actions/checkout@v2
+        with:
+          repository: lucklypse/libs
+          ref: fix/safer-strings-gcc-8
+          path: ${{ github.workspace}}/libs
+      - name: Link paths
+        run: |
+          mkdir -p /source
+          ln -s "${{ github.workspace }}/sysdig" /source/sysdig
+          ln -s "${{ github.workspace }}/libs" /source/libs
+      - name: Build
+        run: build cmake
+      - name: Build packages
+        run: build package
