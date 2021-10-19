@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=ghcr.io/lucaguerra/builder:bd15a749b2b697ab7596d66c4841000c8158fed2
+ARG BUILDER_IMAGE=ghcr.io/lucaguerra/sysdig-builder:a1d5f5336726b14062be4693d3c92bee879e76c7
 
 FROM ${BUILDER_IMAGE} AS builder
 
