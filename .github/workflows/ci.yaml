@@ -33,6 +33,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get new builder image tag
+        id: get-new-builder
+        if: steps.builder-files.outputs.any_changed == 'true'
+        run: |
+          echo "::set-output name=builder_image::${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}"
 
       - name: Build new builder
         id: build-builder
@@ -40,11 +46,11 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/builder
-          tags: ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}
+          tags: ${{ steps.get-new-builder.outputs.builder_image }}
           push: true
 
     outputs:
-      builder_image: ${{ (steps.builder-files.outputs.any_changed == 'true') && ${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }} || steps.get-builder.outputs.builder_image }}
+      builder_image: ${{ (steps.builder-files.outputs.any_changed == 'true') && steps.get-new-builder.outputs.builder_image || steps.get-builder.outputs.builder_image }}
 
 
 # name: Get the latest builder tag
