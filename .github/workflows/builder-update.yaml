@@ -1,0 +1,33 @@
+name: Builder update
+on:
+  push:
+    branches: [new/gha-single-workflow]
+    paths: ['docker/builder/**']
+
+jobs:
+  update-builder:
+    env:
+      REGISTRY: ghcr.io
+      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build new builder
+        id: build-builder
+        uses: docker/build-push-action@v2
+        with:
+          context: docker/builder
+          tags: 
+            - ${{ format('{0}':latest, env.BUILDER_IMAGE_BASE) }}
+            - ${{ format('{0}:{1}', env.BUILDER_IMAGE_BASE, github.sha) }}
+          push: true
