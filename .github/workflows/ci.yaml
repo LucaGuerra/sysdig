@@ -2,59 +2,10 @@ name: CI Build
 on: [pull_request] # to be changed in pull_request: branches: - main (or the used main branch)
 
 jobs:
-  builder:
-    env:
-      REGISTRY: ghcr.io
-      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Sysdig
-        uses: actions/checkout@v2
-
-      - name: Check if builder is modified
-        id: builder-files
-        uses: tj-actions/changed-files@v10.1
-        with:
-          files: |
-            ^docker/builder
-
-      - name: Get latest builder tag
-        id: get-builder
-        run: |
-          echo "::set-output name=builder_image::$(grep 'ARG BUILDER_IMAGE=' '${{ github.workspace }}/docker/sysdig/Dockerfile' | cut -d '=' -f 2 | cut -d ' ' -f 1)"
-
-      - name: Login to Github Packages
-        if: steps.builder-files.outputs.any_changed == 'true'
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Get new builder image tag
-        id: get-new-builder
-        if: steps.builder-files.outputs.any_changed == 'true'
-        run: |
-          echo "::set-output name=builder_image::${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}"
-
-      - name: Build new builder
-        id: build-builder
-        if: steps.builder-files.outputs.any_changed == 'true'
-        uses: docker/build-push-action@v2
-        with:
-          context: docker/builder
-          tags: ${{ steps.get-new-builder.outputs.builder_image }}
-          push: true
-
-    outputs:
-      builder_image: ${{ (steps.builder-files.outputs.any_changed == 'true') && steps.get-new-builder.outputs.builder_image || steps.get-builder.outputs.builder_image }}
-
   build-sysdig-linux:
-    needs: builder
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.builder.outputs.builder_image }}
+      image: docker/builder/Dockerfile
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
@@ -63,8 +14,8 @@ jobs:
       - name: Checkout libs
         uses: actions/checkout@v2
         with:
-          repository: lucklypse/libs
-          ref: fix/safer-strings-gcc-8
+          repository: falcosecurity/libs
+          ref: 396f2c936a6941462c0ea7ff29fe6157481df96d
           path: libs
       - name: Link paths
         run: |
