@@ -22,7 +22,7 @@ jobs:
       - name: Get latest builder tag
         id: get-builder
         run: |
-          echo "::set-output name=builder_image::$(grep 'ARG BUILDER_IMAGE=' '${{ github.workspace }}/docker/sysdig/Dockerfile' | cut -d '=' -f 2 | cut -d ' ' -f 1)"
+          echo "::set-output name=builder_image::ghcr.io/lucaguerra/sysdig-builder:a1d5f5336726b14062be4693d3c92bee879e76c7"
 
       - name: Login to Github Packages
         if: steps.builder-files.outputs.any_changed == 'true'
@@ -63,8 +63,8 @@ jobs:
       - name: Checkout libs
         uses: actions/checkout@v2
         with:
-          repository: lucklypse/libs
-          ref: fix/safer-strings-gcc-8
+          repository: falcosecurity/libs
+          ref: 396f2c936a6941462c0ea7ff29fe6157481df96d
           path: libs
       - name: Link paths
         run: |
