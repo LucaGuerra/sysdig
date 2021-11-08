@@ -6,7 +6,7 @@ jobs:
   build-sysdig-linux:
     runs-on: ubuntu-latest
     container:
-      image: docker/builder/builder.Dockerfile
+      image: './docker/builder/builder.Dockerfile'
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
