@@ -5,7 +5,7 @@ jobs:
   builder:
     env:
       REGISTRY: ghcr.io
-      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
+      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder-pr
 
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +36,7 @@ jobs:
         id: get-new-builder
         if: steps.builder-files.outputs.any_changed == 'true'
         run: |
-          echo "::set-output name=builder_image::${{ env.BUILDER_IMAGE_BASE }}:${{ github.sha }}"
+          echo "::set-output name=builder_image::${{ env.BUILDER_IMAGE_BASE }}:${{ github.event.pull_request.number }}"
 
       - name: Build new builder
         id: build-builder
