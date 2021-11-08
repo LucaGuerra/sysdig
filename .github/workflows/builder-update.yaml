@@ -1,7 +1,7 @@
 name: Builder update
 on:
   push:
-    branches: [new/gha-single-workflow]
+    branches: [new/gha-single-workflow] # change this to dev/main
     paths: ['docker/builder/**']
 
 jobs:
@@ -28,6 +28,5 @@ jobs:
         with:
           context: docker/builder
           tags: 
-            - ${{ format('{0}':latest, env.BUILDER_IMAGE_BASE) }}
-            - ${{ format('{0}:{1}', env.BUILDER_IMAGE_BASE, github.sha) }}
+            - ${{ format('{0}':latest, env.BUILDER_IMAGE_BASE) }},${{ format('{0}:{1}', env.BUILDER_IMAGE_BASE, github.sha) }}
           push: true
