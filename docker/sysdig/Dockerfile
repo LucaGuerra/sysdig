@@ -1,6 +1,4 @@
-ARG BUILDER_IMAGE=ghcr.io/lucaguerra/sysdig-builder:a1d5f5336726b14062be4693d3c92bee879e76c7
-
-FROM ${BUILDER_IMAGE} AS builder
+FROM ghcr.io/lucaguerra/sysdig-builder:dev AS builder
 
 ARG BUILD_VERSION=0.1.1dev
 
