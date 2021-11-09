@@ -1,0 +1,59 @@
+name: Create Sysdig draft release
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build-release-linux:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_VERSION: ${{ github.ref }}
+    container:
+      image: ghcr.io/lucaguerra/sysdig-builder:dev
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        with:
+          path: sysdig
+      - name: Link paths
+        run: |
+          mkdir -p /source
+          ln -s "$GITHUB_WORKSPACE/sysdig" /source/sysdig
+          ln -s "$GITHUB_WORKSPACE/libs" /source/libs
+      - name: Build
+        run: build cmake
+      - name: Build packages
+        run: build package
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: sysdig-release-${{ env.BUILD_VERSION }}
+          path: /build/relase/sysdig-${{ env.BUILD_VERSION }}*
+
+  push-container-image:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_VERSION: ${{ github.ref }}
+    needs: build-release-linux
+    steps:
+      - name: Build and push container images
+        uses: docker/build-push-action@v2
+        with:
+          file: docker/sysdig/Dockerfile
+          context: .
+          tags: ghcr.io/lucaguerra/sysdig:${{ github.ref }}
+          push: true
+          build-args:
+            BUILD_VERSION=${{ env.BUILD_VERSION }}
+
+  create-draft-release:
+    runs-on: ubuntu-latest
+    needs: [push-container-image, build-release-linux]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: sysdig-release-${{ env.BUILD_VERSION }}
+      - name: Verify artifacts structure
+        run: ls -R
