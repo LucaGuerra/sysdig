@@ -8,7 +8,7 @@ jobs:
   build-release-linux:
     runs-on: ubuntu-latest
     env:
-      BUILD_VERSION: ${{ github.ref }}
+      BUILD_VERSION: ${{ github.ref_name }}
     container:
       image: ghcr.io/lucaguerra/sysdig-builder:dev
     steps:
@@ -40,7 +40,7 @@ jobs:
   push-container-image:
     runs-on: ubuntu-latest
     env:
-      BUILD_VERSION: ${{ github.ref }}
+      BUILD_VERSION: ${{ github.ref_name }}
     needs: build-release-linux
     steps:
       - name: Build and push container images
@@ -48,7 +48,7 @@ jobs:
         with:
           file: docker/sysdig/Dockerfile
           context: .
-          tags: ghcr.io/lucaguerra/sysdig:${{ github.ref }}
+          tags: ghcr.io/lucaguerra/sysdig:${{ env.BUILD_VERSION }}
           push: true
           build-args:
             BUILD_VERSION=${{ env.BUILD_VERSION }}
