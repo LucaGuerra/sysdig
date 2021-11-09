@@ -16,6 +16,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: sysdig
+      - name: Checkout libs
+        uses: actions/checkout@v2
+        with:
+          repository: LucaGuerra/libs
+          ref: fix/remove-unused-sh-var
+          path: libs
       - name: Link paths
         run: |
           mkdir -p /source

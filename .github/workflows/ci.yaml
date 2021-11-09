@@ -58,8 +58,8 @@ jobs:
       - name: Checkout libs
         uses: actions/checkout@v2
         with:
-          repository: falcosecurity/libs
-          ref: 326b87e5d7e02b86196863081996f8e0391bf734
+          repository: LucaGuerra/libs
+          ref: fix/remove-unused-sh-var
           path: libs
       - name: Link paths
         run: |
