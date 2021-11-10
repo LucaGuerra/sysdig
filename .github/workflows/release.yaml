@@ -34,12 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_VERSION: ${{ github.ref_name }}
-    needs: build-release-linux
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
-        with:
-          path: sysdig
       - name: Build and push container images
         uses: docker/build-push-action@v2
         with:
