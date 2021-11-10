@@ -1,0 +1,36 @@
+name: Create Sysdig stub draft release
+on:
+  push:
+    tags:
+      - 'test-[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build-fake-release-linux:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_VERSION: ${{ github.ref_name }}
+    container:
+      image: ghcr.io/lucaguerra/sysdig-builder:dev
+    steps:
+      - name: Stub build packages
+        run: |
+          mkdir -p /build/release
+          echo "targzm placeholder" > sysdig-stub-${{ github.ref_name }}.tar.gz
+          echo "deb placeholder" > sysdig-stub-${{ github.ref_name }}.deb
+          echo "rpm placeholder" > sysdig-stub-${{ github.ref_name }}.rpm
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: sysdig-release-${{ env.BUILD_VERSION }}
+          path: /build/release/sysdig-${{ env.BUILD_VERSION }}*
+
+  create-draft-release:
+    runs-on: ubuntu-latest
+    needs: [push-container-image, build-release-linux]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: sysdig-release-${{ env.BUILD_VERSION }}
+      - name: Verify artifacts structure
+        run: ls -R

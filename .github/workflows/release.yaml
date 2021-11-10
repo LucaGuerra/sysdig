@@ -37,25 +37,30 @@ jobs:
           name: sysdig-release-${{ env.BUILD_VERSION }}
           path: /build/relase/sysdig-${{ env.BUILD_VERSION }}*
 
-  push-container-image:
-    runs-on: ubuntu-latest
-    env:
-      BUILD_VERSION: ${{ github.ref_name }}
-    needs: build-release-linux
-    steps:
-      - name: Build and push container images
-        uses: docker/build-push-action@v2
-        with:
-          file: docker/sysdig/Dockerfile
-          context: .
-          tags: ghcr.io/lucaguerra/sysdig:${{ env.BUILD_VERSION }}
-          push: true
-          build-args:
-            BUILD_VERSION=${{ env.BUILD_VERSION }}
+  # push-container-image:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     BUILD_VERSION: ${{ github.ref_name }}
+  #   needs: build-release-linux
+  #   steps:
+  #     - name: Checkout Sysdig
+  #       uses: actions/checkout@v2
+  #       with:
+  #         path: sysdig
+  #     - name: Build and push container images
+  #       uses: docker/build-push-action@v2
+  #       with:
+  #         file: docker/sysdig/Dockerfile
+  #         context: .
+  #         tags: ghcr.io/lucaguerra/sysdig:${{ env.BUILD_VERSION }}
+  #         push: true
+  #         build-args:
+  #           BUILD_VERSION=${{ env.BUILD_VERSION }}
 
   create-draft-release:
     runs-on: ubuntu-latest
-    needs: [push-container-image, build-release-linux]
+    # needs: [push-container-image, build-release-linux]
+    needs: [build-release-linux]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
