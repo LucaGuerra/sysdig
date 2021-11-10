@@ -34,15 +34,23 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_VERSION: ${{ github.ref_name }}
+      REGISTRY: ghcr.io
+      SYSDIG_IMAGE_BASE: ghcr.io/lucaguerra/sysdig # CHANGE this for draios
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push container images
         uses: docker/build-push-action@v2
         with:
           file: docker/sysdig/Dockerfile
           context: .
-          tags: ghcr.io/lucaguerra/sysdig:${{ env.BUILD_VERSION }}
+          tags: ${{ env.SYSDIG_IMAGE_BASE }}:${{ env.BUILD_VERSION }}
           push: true
           build-args:
             BUILD_VERSION=${{ env.BUILD_VERSION }}
