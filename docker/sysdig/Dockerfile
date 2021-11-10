@@ -12,7 +12,7 @@ COPY . /source/sysdig
 RUN if [ -d /source/sysdig/falcosecurity-libs ]; then ln -s /source/sysdig/falcosecurity-libs /source/libs; fi
 
 RUN build cmake
-RUN build install
+RUN build package && build install
 
 FROM registry.access.redhat.com/ubi8/ubi
 
