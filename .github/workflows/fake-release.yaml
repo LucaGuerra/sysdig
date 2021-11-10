@@ -15,9 +15,9 @@ jobs:
       - name: Stub build packages
         run: |
           mkdir -p /build/release
-          echo "targzm placeholder" > sysdig-stub-${{ github.ref_name }}.tar.gz
-          echo "deb placeholder" > sysdig-stub-${{ github.ref_name }}.deb
-          echo "rpm placeholder" > sysdig-stub-${{ github.ref_name }}.rpm
+          echo "targzm placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.tar.gz
+          echo "deb placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.deb
+          echo "rpm placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.rpm
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
