@@ -1,9 +1,7 @@
 FROM ghcr.io/lucaguerra/sysdig-builder:dev AS builder
 
 ARG BUILD_VERSION=0.1.1dev
-
 ENV BUILD_VERSION=${BUILD_VERSION}
-ENV INSTALL_PREFIX=/opt/sysdig
 
 WORKDIR /source
 
@@ -11,8 +9,8 @@ COPY . /source/sysdig
 
 RUN if [ -d /source/sysdig/falcosecurity-libs ]; then ln -s /source/sysdig/falcosecurity-libs /source/libs; fi
 
-RUN build cmake
-RUN build package && build install
+RUN INSTALL_PREFIX=/opt/sysdig build cmake
+RUN build build install
 
 FROM registry.access.redhat.com/ubi8/ubi
 
