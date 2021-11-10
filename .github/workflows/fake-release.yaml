@@ -35,5 +35,15 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sysdig-stub-${{ env.BUILD_VERSION }}
-      - name: Verify artifacts structure
-        run: ls -R
+      - name: Create draft release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            sysdig-stub-${{ github.ref_name }}.tar.gz
+            sysdig-stub-${{ github.ref_name }}.deb
+            sysdig-stub-${{ github.ref_name }}.rpm
+          draft: true
+        # sysdig-stub-test-0.27.109.deb
+        # sysdig-stub-test-0.27.109.rpm
+        # sysdig-stub-test-0.27.109.tar.gz
+
