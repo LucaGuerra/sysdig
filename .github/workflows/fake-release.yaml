@@ -15,9 +15,9 @@ jobs:
       - name: Stub build packages
         run: |
           mkdir -p /build/release
-          echo "targzm placeholder" > /build/release/sysdig-${{ github.ref_name }}.tar.gz
-          echo "deb placeholder" > /build/release/sysdig-${{ github.ref_name }}.deb
-          echo "rpm placeholder" > /build/release/sysdig-${{ github.ref_name }}.rpm
+          echo "targzm placeholder" > /build/release/sysdig-${{ github.ref_name }}-x86_64.tar.gz
+          echo "deb placeholder" > /build/release/sysdig-${{ github.ref_name }}-x86_64.deb
+          echo "rpm placeholder" > /build/release/sysdig-${{ github.ref_name }}-x86_64.rpm
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -39,9 +39,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            sysdig-${{ github.ref_name }}.tar.gz
-            sysdig-${{ github.ref_name }}.deb
-            sysdig-${{ github.ref_name }}.rpm
+            sysdig-${{ github.ref_name }}-x86_64.tar.gz
+            sysdig-${{ github.ref_name }}-x86_64.deb
+            sysdig-${{ github.ref_name }}-x86_64.rpm
           draft: true
         # sysdig-stub-test-0.27.109.deb
         # sysdig-stub-test-0.27.109.rpm
