@@ -15,14 +15,14 @@ jobs:
       - name: Stub build packages
         run: |
           mkdir -p /build/release
-          echo "targzm placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.tar.gz
-          echo "deb placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.deb
-          echo "rpm placeholder" > /build/release/sysdig-stub-${{ github.ref_name }}.rpm
+          echo "targzm placeholder" > /build/release/sysdig-${{ github.ref_name }}.tar.gz
+          echo "deb placeholder" > /build/release/sysdig-${{ github.ref_name }}.deb
+          echo "rpm placeholder" > /build/release/sysdig-${{ github.ref_name }}.rpm
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: sysdig-stub-${{ env.BUILD_VERSION }}
-          path: /build/release/sysdig-stub-${{ env.BUILD_VERSION }}*
+          name: sysdig-${{ env.BUILD_VERSION }}
+          path: /build/release/sysdig-${{ env.BUILD_VERSION }}*
 
   create-draft-release:
     runs-on: ubuntu-latest
@@ -34,14 +34,14 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: sysdig-stub-${{ env.BUILD_VERSION }}
+          name: sysdig-${{ env.BUILD_VERSION }}
       - name: Create draft release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            sysdig-stub-${{ github.ref_name }}.tar.gz
-            sysdig-stub-${{ github.ref_name }}.deb
-            sysdig-stub-${{ github.ref_name }}.rpm
+            sysdig-${{ github.ref_name }}.tar.gz
+            sysdig-${{ github.ref_name }}.deb
+            sysdig-${{ github.ref_name }}.rpm
           draft: true
         # sysdig-stub-test-0.27.109.deb
         # sysdig-stub-test-0.27.109.rpm
