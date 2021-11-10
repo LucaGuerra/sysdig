@@ -21,17 +21,19 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: sysdig-release-${{ env.BUILD_VERSION }}
+          name: sysdig-stub-release-${{ env.BUILD_VERSION }}
           path: /build/release/sysdig-${{ env.BUILD_VERSION }}*
 
   create-draft-release:
     runs-on: ubuntu-latest
+    env:
+      BUILD_VERSION: ${{ github.ref_name }}
     # needs: [push-container-image, build-release-linux]
     needs: [build-fake-release-linux]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: sysdig-release-${{ env.BUILD_VERSION }}
+          name: sysdig-stub-release-${{ env.BUILD_VERSION }}
       - name: Verify artifacts structure
         run: ls -R
