@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sysdig-stub-release-${{ env.BUILD_VERSION }}
-          path: /build/release/sysdig-${{ env.BUILD_VERSION }}*
+          path: /build/release/sysdig-stub-${{ env.BUILD_VERSION }}*
 
   create-draft-release:
     runs-on: ubuntu-latest
