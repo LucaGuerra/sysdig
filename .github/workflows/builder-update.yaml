@@ -1,14 +1,14 @@
 name: Builder update
 on:
   push:
-    branches: [new/gha-single-workflow] # change this to dev/main
+    branches: [dev]
     paths: ['docker/builder/**']
 
 jobs:
   update-builder:
     env:
       REGISTRY: ghcr.io
-      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder
+      BUILDER_IMAGE_BASE: ghcr.io/draios/sysdig-builder
 
     runs-on: ubuntu-latest
     steps:
