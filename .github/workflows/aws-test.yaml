@@ -7,6 +7,11 @@ on:
 jobs:
   aws-test-job:
     runs-on: ubuntu-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
