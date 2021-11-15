@@ -2,7 +2,7 @@ name: AWS connection test
 on:
   push:
     branches: [gha-aws]
-    paths: ['scripts/aws-test']
+    paths: ['scripts/aws-test/**']
 
 jobs:
   aws-test-job:
