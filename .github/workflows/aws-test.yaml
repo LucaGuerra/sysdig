@@ -20,4 +20,4 @@ jobs:
 
       - name: Run script
         working-directory: scripts/aws-test
-        run: poetry run do_test.py
+        run: pwd && ls && poetry run do_test.py
