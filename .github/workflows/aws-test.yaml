@@ -18,6 +18,10 @@ jobs:
       - name: Setup poetry
         uses: abatilo/actions-poetry@v2.0.0
 
+      - name: Install deps
+        working-directory: scripts/aws-test
+        run: poetry install
+
       - name: Run script
         working-directory: scripts/aws-test
-        run: pwd && ls && poetry run do_test.py
+        run: poetry run ./do_test.py
