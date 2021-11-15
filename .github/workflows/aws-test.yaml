@@ -1,0 +1,23 @@
+name: AWS connection test
+on:
+  push:
+    branches: [gha-aws]
+    paths: ['scripts/aws-test']
+
+jobs:
+  aws-test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Setup poetry
+        uses: abatilo/actions-poetry@v2.0.0
+
+      - name: Run script
+        run: poetry run scripts/aws-test/do_test.py
+
