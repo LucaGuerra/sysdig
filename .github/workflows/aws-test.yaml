@@ -19,5 +19,5 @@ jobs:
         uses: abatilo/actions-poetry@v2.0.0
 
       - name: Run script
-        run: poetry run scripts/aws-test/do_test.py
-
+        working-directory: scripts/aws-test
+        run: poetry run do_test.py
