@@ -3,7 +3,7 @@
 import sys
 import boto3
 
-# change 5
+# change 6
 
 def main():
     print(f"aws test script. boto3 version: {boto3.__version__}")
