@@ -92,11 +92,15 @@ def main():
             module_output = conf.get('output', {}).get('module')
             probe_output = conf.get('output', {}).get('probe')
             
-            module_basename = os.path.basename(module_output)
-            probe_basename = os.path.basename(probe_output)
+            module_s3key = None
+            if module_output is not None:
+                module_basename = os.path.basename(module_output)
+                module_s3key = f"{s3_prefix}/{driverversion}/{module_basename}"
 
-            module_s3key = f"{s3_prefix}/{driverversion}/{module_basename}"
-            probe_s3key = f"{s3_prefix}/{driverversion}/{probe_basename}"
+            probe_s3key = None
+            if probe_output is not None:
+                probe_basename = os.path.basename(probe_output)
+                probe_s3key = f"{s3_prefix}/{driverversion}/{probe_basename}"
 
             if s3:
                 need_module = (module_output is not None) and not s3_exists(s3, s3_bucket, module_s3key)
