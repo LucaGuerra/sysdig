@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Sysdig Driverkit Build"
+name = "sysdig-driverkit"
 version = "0.1.0"
 description = ""
 authors = ["Sysdig Inc. <support@sysdig.com>"]
