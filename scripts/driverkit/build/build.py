@@ -8,6 +8,7 @@ import shutil
 import argparse
 import subprocess
 from pathlib import Path
+from botocore.errorfactory import ClientError
 
 # change 5
 
