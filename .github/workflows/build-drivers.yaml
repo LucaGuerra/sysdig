@@ -26,6 +26,7 @@ jobs:
       - name: Build Driverkit
         working-directory: driverkit-repo
         run: |
+          set -x
           GIT_TAG=$(git describe --tags --abbrev=0 2> /dev/null)
           COMMITS_FROM_GIT_TAG=$(git rev-list ${GIT_TAG}.. --count 2> /dev/null || echo "0")
           COMMIT_NO=$(git rev-parse --short HEAD 2> /dev/null || true)
