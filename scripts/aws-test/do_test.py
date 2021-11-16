@@ -10,7 +10,7 @@ from botocore.errorfactory import ClientError
 
 def s3_exists(s3, bucket: str, key: str) -> bool:
     try:
-        s3.head_object(Bucket=bucket, Key=bucket)
+        s3.head_object(Bucket=bucket, Key=key)
     except ClientError:
         # Not found
         return False
@@ -22,7 +22,7 @@ def main():
 
     s3 = boto3.client('s3')
 
-    if s3_exists("lucag-test-personal", "hello_s3/hello.bin"):
+    if s3_exists(s3, "lucag-test-personal", "hello_s3/hello.bin"):
         print("[*] key already exists on S3")
     else:
         print("[*] key does not exist on s3")
