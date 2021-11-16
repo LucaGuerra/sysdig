@@ -26,15 +26,8 @@ jobs:
       - name: Build Driverkit
         working-directory: driverkit-repo
         run: |
-          set -x
-          ls -la
-          GIT_TAG=$(git describe --tags --abbrev=0 2> /dev/null)
-          COMMITS_FROM_GIT_TAG=$(git rev-list ${GIT_TAG}.. --count 2> /dev/null || echo "0")
-          COMMIT_NO=$(git rev-parse --short HEAD 2> /dev/null || true)
-          GIT_COMMIT="${COMMIT_NO}.dirty"
-          GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-
-          LDFLAGS="-X github.com/falcosecurity/driverkit/pkg/version.buildTime=$(date +%s) -X github.com/falcosecurity/driverkit/pkg/version.gitCommit=${GIT_COMMIT} -X github.com/falcosecurity/driverkit/pkg/version.gitTag=${GIT_TAG} -X github.com/falcosecurity/driverkit/pkg/version.commitsFromGitTag=${COMMITS_FROM_GIT_TAG} -X github.com/falcosecurity/driverkit/pkg/driverbuilder.builderBaseImage=falcosecurity/driverkit-builder:af65823"
+          GIT_COMMIT=$(git rev-parse HEAD)
+          LDFLAGS="-X github.com/falcosecurity/driverkit/pkg/version.buildTime=$(date +%s) -X github.com/falcosecurity/driverkit/pkg/version.gitCommit=${GIT_COMMIT} -X github.com/falcosecurity/driverkit/pkg/driverbuilder.builderBaseImage=falcosecurity/driverkit-builder:af65823"
 
           CGO_ENABLED=1 go build -v -ldflags $LDFLAGS -tags 'sqlite_omit_load_extension linux' -o driverkit
 
