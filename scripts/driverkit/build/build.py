@@ -129,6 +129,7 @@ def main():
             else:
                 print(f"[-] Build failed {config_file}")
                 fail_count += 1
+                continue
 
             # upload to s3 and remove
             if s3:
