@@ -54,4 +54,4 @@ jobs:
 
       - name: Build drivers if not present
         working-directory: scripts/driverkit/build
-        run: poetry run python build.py ../config_small --driverkit ../../../driverkit-repo/driverkit --s3_bucket ${{ env.S3_BUCKET }} --s3_prefix ${{ env.S3_PREFIX }}
+        run: poetry run python build.py ../config_small --driverkit ../../../driverkit-repo/driverkit --s3-bucket ${{ env.S3_BUCKET }} --s3-prefix ${{ env.S3_PREFIX }}
