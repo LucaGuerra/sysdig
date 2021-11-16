@@ -6,7 +6,7 @@ import io
 import boto3
 from botocore.errorfactory import ClientError
 
-# change 7
+# change 8
 
 def s3_exists(s3, bucket: str, key: str) -> bool:
     try:
