@@ -7,6 +7,10 @@ on:
 jobs:
   aws-test-job:
     runs-on: ubuntu-latest
+    env:
+      S3_BUCKET: lucag-test-personal
+      S3_PREFIX: hello_s3
+
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
       id-token: write
@@ -42,12 +46,12 @@ jobs:
         working-directory: scripts/driverkit/build
         run: poetry install
 
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
-      #   with:
-      #     role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
-      #     aws-region: us-east-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
+        with:
+          role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
+          aws-region: us-east-1
 
       - name: Build drivers if not present
         working-directory: scripts/driverkit/build
-        run: poetry run python build.py ../config_small --driverkit ../../../driverkit-repo/driverkit
+        run: poetry run python build.py ../config_small --driverkit ../../../driverkit-repo/driverkit --s3_bucket ${{ env.S3_BUCKET }} --s3_prefix ${{ env.S3_PREFIX }}
