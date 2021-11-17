@@ -104,7 +104,7 @@ jobs:
           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
         run: printenv PRIVATE_KEY | gpg --import -
       - name: Sign DEBs # change this to EC51E8C4 later
-        run: dpkg-sig -k ${{ env.KEY_ID }} -s *.deb
+        run: dpkg-sig -k ${{ env.KEY_ID }} -s builder *.deb
       - name: Check signature
         run: dpkg-sig --verify *.deb
       - name: Upload Signed DEBs
