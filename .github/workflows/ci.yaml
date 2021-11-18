@@ -7,7 +7,7 @@ jobs:
   builder:
     env:
       REGISTRY: ghcr.io
-      BUILDER_IMAGE_BASE: ghcr.io/draios/sysdig-builder-pr
+      BUILDER_IMAGE_BASE: ghcr.io/lucaguerra/sysdig-builder-pr
       BUILDER_DEV: ghcr.io/draios/sysdig-builder:dev
 
     runs-on: ubuntu-latest
