@@ -7,6 +7,8 @@ jobs:
   upload-files:
     runs-on: ubuntu-latest
     env:
+      BUILD_VERSION: ${{ github.ref_name }}
+      SYSDIG_IMAGE_RC_BASE: ghcr.io/lucaguerra/sysdig # CHANGE this for draios
       RELEASE: ${{ github.event.release.name }}
     steps:
       - name: Download targz
@@ -16,3 +18,17 @@ jobs:
           file: sysdig-${{ env.RELEASE }}-x86_64.tar.gz
           target: sysdig-${{ env.RELEASE }}-x86_64.tar.gz
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Publish final docker images
+        uses: akhilerm/tag-push-action@v2.0.0
+        with:
+          src: ${{ env.SYSDIG_IMAGE_RC_BASE }}:${{ env.RELEASE }}
+          dst: |
+            docker.io/lucagsd/sysdig:${{ env.RELEASE }}
+        
