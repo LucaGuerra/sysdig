@@ -2,6 +2,8 @@
 
 set -euxo pipefail
 
+# change 1
+
 # required env variables
 echo "REPOSITORY_DIR: $REPOSITORY_DIR"
 echo "RPM_BASEARCH: $RPM_BASEARCH"
