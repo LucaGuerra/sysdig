@@ -1,0 +1,50 @@
+name: Release RPMs and DEBs
+on:
+  push:
+    branches: [gha-aws]
+    paths: ['scripts/release/**']
+
+jobs:
+  upload-rpm:
+    runs-on: ubuntu-latest
+    container:
+      image: centos:8
+    env:
+      RPM_BASEARCH: x86_64
+      REPOSITORY_NAME: stable
+      REPOSITORY_DIR: rpm_repo
+      PACKAGES_DIR: packages
+    steps:
+      - name: Install deps
+        run: |
+          yum -y install unzip createrepo_c git
+          cd /tmp
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          ./aws/install
+
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        path: sysdig
+
+      - name: Create directories
+        run: |
+          mkdir -p $REPOSITORY_DIR
+          mkdir -p $PACKAGES_DIR
+
+      - name: Download artifact to publish
+        working-directory: ${{ env.PACKAGES_DIR }}
+        run: curl --remote-name-all -L https://s3.amazonaws.com/download.draios.com/stable/rpm/x86_64/sysdig-0.26.4-x86_64.rpm
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
+        with:
+          role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
+          aws-region: us-east-1
+
+      - name: Release RPMs
+        env:
+          SCRIPTS_DIR: sysdig/scripts/release
+          S3_BUCKET_NAME: lucag-test-personal
+        run: sysdig/scripts/release/release_rpm.sh
+        
