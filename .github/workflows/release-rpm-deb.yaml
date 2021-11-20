@@ -25,7 +25,8 @@ jobs:
 
       - name: Checkout Sysdig
         uses: actions/checkout@v2
-        path: sysdig
+        with:
+          path: sysdig
 
       - name: Create directories
         run: |
