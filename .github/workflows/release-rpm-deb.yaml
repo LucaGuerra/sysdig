@@ -71,7 +71,7 @@ jobs:
     steps:
       - name: Install deps
         run: |
-          apt-get update && sudo apt-get -y install dpkg-dev gpg
+          sudo apt-get update && sudo apt-get -y install dpkg-dev gpg
       - name: Checkout Sysdig
         uses: actions/checkout@v2
         with:
