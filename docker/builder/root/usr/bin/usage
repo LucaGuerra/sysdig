@@ -4,6 +4,7 @@ gccversion=$(gcc --version | head -n1)
 cppversion=$(g++ -dM -E -x c++ /dev/null | grep -F __cplusplus | cut -d' ' -f3)
 cmakeversion=$(cmake --version | head -n1)
 clangversion=$(clang --version | head -n1)
+imagename="ghcr.io/draios/sysdig-builder:dev"
 
 cat <<EOF
 Hello, this is the Sysdig builder container.
@@ -11,11 +12,11 @@ Hello, this is the Sysdig builder container.
 How to use.
 
     The default commands for the Sysdig builder image reports usage and environment info.
-    * docker run sysdig/sysdig-builder
-    * docker run sysdig/sysdig-builder usage
+    * docker run ${imagename}
+    * docker run ${imagename} usage
 
     It supports bash.
-    * docker run -ti sysdig/sysdig-builder bash
+    * docker run -ti ${imagename} bash
 
     To build it needs:
     - The source directory in /source (ie., the directory containing the sysdig tree)
@@ -23,16 +24,16 @@ How to use.
     Optionally, you can also bind-mount the build directory.
     So, you can execute it from the root directory as follows.
 
-    * docker run -v $PWD/..:/source -v $PWD/build:/build sysdig/sysdig-builder cmake
-    * docker run -v $PWD/..:/source -v $PWD/build:/build sysdig/sysdig-builder [<cmake-target-x>, ..., <cmake-target-y>]
+    * docker run -v $PWD/..:/source -v $PWD/build:/build ${imagename} cmake
+    * docker run -v $PWD/..:/source -v $PWD/build:/build ${imagename} [<cmake-target-x>, ..., <cmake-target-y>]
 
     Eg.,
-    * docker run -v $PWD/..:/source -v $PWD/build:/build sysdig/sysdig-builder tests
-    * docker run -v $PWD/..:/source -v $PWD/build:/build sysdig/sysdig-builder install
+    * docker run -v $PWD/..:/source -v $PWD/build:/build ${imagename} tests
+    * docker run -v $PWD/..:/source -v $PWD/build:/build ${imagename} install
 
 How to build.
 
-    * cd docker/builder && DOCKER_BUILDKIT=1 docker build -t sysdig/sysdig-builder .
+    * cd docker/builder && DOCKER_BUILDKIT=1 docker build -t ${imagename} .
 
     In case you want to customise the builder at build time the following build arguments are provided:
     - BUILD_TYPE                whether you want a "release" or "debug" build (defaults to "release").
