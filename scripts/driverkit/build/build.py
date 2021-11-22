@@ -11,6 +11,7 @@ from pathlib import Path
 from botocore.errorfactory import ClientError
 
 # change 5
+# TODO allow module / driver name change
 
 def driverkit_build(driverkit: str, config_file: Path, driverversion: str, devicename: str, drivername: str) -> bool:
     args = [driverkit, 'docker',
@@ -135,12 +136,12 @@ def main():
             if s3:
                 if module_output is not None:
                     with open(module_output, 'rb') as fp:
-                        s3.upload_fileobj(fp, s3_bucket, module_s3key)
+                        s3.upload_fileobj(fp, s3_bucket, module_s3key) # XXX TODO ACL for public read
                     delete_file(module_output)
 
                 if probe_output is not None:
                     with open(probe_output, 'rb') as fp:
-                        s3.upload_fileobj(fp, s3_bucket, probe_s3key)
+                        s3.upload_fileobj(fp, s3_bucket, probe_s3key) # XXX TODO ACL for public read
                     delete_file(probe_output)
 
         print(f"[*] Build {driverversion} complete. {success_count}/{count} built, {fail_count}/{count} failed, {skip_count}/{count} already built.")

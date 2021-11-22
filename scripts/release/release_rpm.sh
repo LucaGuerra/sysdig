@@ -5,12 +5,13 @@ set -euxo pipefail
 # change 2
 
 # required env variables
-echo "REPOSITORY_DIR: $REPOSITORY_DIR"
+echo "REPOSITORY_DIR: $REPOSITORY_DIR" # root repo directory on the local filesystem
 echo "RPM_BASEARCH: $RPM_BASEARCH"
 echo "REPOSITORY_NAME: $REPOSITORY_NAME"
 echo "PACKAGES_DIR: $PACKAGES_DIR"
 echo "SCRIPTS_DIR: $SCRIPTS_DIR"
 echo "S3_BUCKET_NAME: $S3_BUCKET_NAME"
+KEY_ID="$KEY_ID" # only check that it is set
 
 mkdir -p $REPOSITORY_DIR/rpm/$RPM_BASEARCH
 
