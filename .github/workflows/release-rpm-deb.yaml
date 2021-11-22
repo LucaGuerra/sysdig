@@ -1,105 +1,105 @@
-name: Release RPMs and DEBs
-on:
-  push:
-    branches: [gha-aws]
-    paths: ['scripts/release/**']
+# name: Release RPMs and DEBs
+# on:
+#   push:
+#     branches: [gha-aws]
+#     paths: ['scripts/release/**']
 
-jobs:
-  release-rpm:
-    runs-on: ubuntu-latest
-    container:
-      image: centos:8
-    env:
-      RPM_BASEARCH: x86_64
-      REPOSITORY_NAME: stable
-      REPOSITORY_DIR: rpm_repo
-      PACKAGES_DIR: packages
+# jobs:
+#   release-rpm:
+#     runs-on: ubuntu-latest
+#     container:
+#       image: centos:8
+#     env:
+#       RPM_BASEARCH: x86_64
+#       REPOSITORY_NAME: stable
+#       REPOSITORY_DIR: rpm_repo
+#       PACKAGES_DIR: packages
 
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
-    permissions:
-      id-token: write
-      contents: read
+#     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+#     permissions:
+#       id-token: write
+#       contents: read
 
-    steps:
-      - name: Install deps
-        run: |
-          yum -y install unzip createrepo_c git
-          cd /tmp
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          ./aws/install
+#     steps:
+#       - name: Install deps
+#         run: |
+#           yum -y install unzip createrepo_c git
+#           cd /tmp
+#           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#           unzip awscliv2.zip
+#           ./aws/install
 
-      - name: Checkout Sysdig
-        uses: actions/checkout@v2
-        with:
-          path: sysdig
+#       - name: Checkout Sysdig
+#         uses: actions/checkout@v2
+#         with:
+#           path: sysdig
 
-      - name: Create directories
-        run: |
-          mkdir -p $REPOSITORY_DIR
-          mkdir -p $PACKAGES_DIR
+#       - name: Create directories
+#         run: |
+#           mkdir -p $REPOSITORY_DIR
+#           mkdir -p $PACKAGES_DIR
 
-      - name: Download artifact to publish
-        working-directory: ${{ env.PACKAGES_DIR }}
-        run: curl --remote-name-all -L https://s3.amazonaws.com/download.draios.com/stable/rpm/x86_64/sysdig-0.26.5-x86_64.rpm
+#       - name: Download artifact to publish
+#         working-directory: ${{ env.PACKAGES_DIR }}
+#         run: curl --remote-name-all -L https://s3.amazonaws.com/download.draios.com/stable/rpm/x86_64/sysdig-0.26.5-x86_64.rpm
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
-        with:
-          role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
-          aws-region: us-east-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
+#         with:
+#           role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
+#           aws-region: us-east-1
 
-      - name: Release RPMs
-        env:
-          SCRIPTS_DIR: sysdig/scripts/release
-          S3_BUCKET_NAME: lucag-test-personal
-        run: sysdig/scripts/release/release_rpm.sh
+#       - name: Release RPMs
+#         env:
+#           SCRIPTS_DIR: sysdig/scripts/release
+#           S3_BUCKET_NAME: lucag-test-personal
+#         run: sysdig/scripts/release/release_rpm.sh
         
-  release-deb:
-    runs-on: ubuntu-latest
-    env:
-      DEB_BASEARCH: amd64
-      REPOSITORY_NAME: stable
-      REPOSITORY_DIR: deb_repo
-      PACKAGES_DIR: packages
+#   release-deb:
+#     runs-on: ubuntu-latest
+#     env:
+#       DEB_BASEARCH: amd64
+#       REPOSITORY_NAME: stable
+#       REPOSITORY_DIR: deb_repo
+#       PACKAGES_DIR: packages
     
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
-    permissions:
-      id-token: write
-      contents: read
+#     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+#     permissions:
+#       id-token: write
+#       contents: read
 
-    steps:
-      - name: Install deps
-        run: |
-          sudo apt-get update && sudo apt-get -y install dpkg-dev gpg
-      - name: Checkout Sysdig
-        uses: actions/checkout@v2
-        with:
-          path: sysdig
+#     steps:
+#       - name: Install deps
+#         run: |
+#           sudo apt-get update && sudo apt-get -y install dpkg-dev gpg
+#       - name: Checkout Sysdig
+#         uses: actions/checkout@v2
+#         with:
+#           path: sysdig
 
-      - name: Create directories
-        run: |
-          mkdir -p $REPOSITORY_DIR
-          mkdir -p $PACKAGES_DIR
+#       - name: Create directories
+#         run: |
+#           mkdir -p $REPOSITORY_DIR
+#           mkdir -p $PACKAGES_DIR
 
-      - name: Download artifact to publish
-        working-directory: ${{ env.PACKAGES_DIR }}
-        run: curl --remote-name-all -L https://s3.amazonaws.com/download.draios.com/stable/deb/stable-amd64/sysdig-0.26.5-x86_64.deb
+#       - name: Download artifact to publish
+#         working-directory: ${{ env.PACKAGES_DIR }}
+#         run: curl --remote-name-all -L https://s3.amazonaws.com/download.draios.com/stable/deb/stable-amd64/sysdig-0.26.5-x86_64.deb
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
-        with:
-          role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
-          aws-region: us-east-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
+#         with:
+#           role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
+#           aws-region: us-east-1
 
-      - name: Import private key
-        env:
-          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
-        run: printenv PRIVATE_KEY | gpg --import -
+#       - name: Import private key
+#         env:
+#           PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+#         run: printenv PRIVATE_KEY | gpg --import -
 
-      - name: Release DEBs
-        env:
-          SCRIPTS_DIR: sysdig/scripts/release
-          S3_BUCKET_NAME: lucag-test-personal
-          KEY_ID: DCC6C4EF6455E261 # change this to EC51E8C4 later
-        run: sysdig/scripts/release/release_deb.sh
+#       - name: Release DEBs
+#         env:
+#           SCRIPTS_DIR: sysdig/scripts/release
+#           S3_BUCKET_NAME: lucag-test-personal
+#           KEY_ID: DCC6C4EF6455E261 # change this to EC51E8C4 later
+#         run: sysdig/scripts/release/release_deb.sh
