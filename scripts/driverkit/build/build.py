@@ -10,9 +10,6 @@ import subprocess
 from pathlib import Path
 from botocore.errorfactory import ClientError
 
-# change 5
-# TODO allow module / driver name change
-
 def driverkit_build(driverkit: str, config_file: Path, driverversion: str, devicename: str, drivername: str) -> bool:
     args = [driverkit, 'docker',
             '-c', str(config_file.resolve()),
@@ -46,6 +43,8 @@ def main():
     ap.add_argument('--driverkit', help='Path to the driverkit binary to use')
     ap.add_argument('--s3-bucket', help='The S3 bucket name')
     ap.add_argument('--s3-prefix', help='S3 key prefix')
+    ap.add_argument('--moduledrivername', default='scap', help='The module driver name')
+    ap.add_argument('--moduledevicename', default='scap', help='The module device name')
     args = ap.parse_args()
 
     config_dir = Path(args.config_dir)
@@ -123,7 +122,7 @@ def main():
             if probe_output is not None:
                 Path(probe_output).parent.mkdir(parents=True, exist_ok=True)
 
-            success = driverkit_build(driverkit, config_file, driverversion, 'sysdig', 'sysdig-probe')
+            success = driverkit_build(driverkit, config_file, driverversion, args.moduledevicename, args.moduledrivername)
             if success:
                 print(f"[+] Build completed {config_file}")
                 success_count += 1
