@@ -25,6 +25,7 @@ jobs:
       SYSDIG_IMAGE_BASE: ghcr.io/lucaguerra/sysdig # CHANGE this for draios
       SYSDIG_DOCKERHUB_IMAGE_BASE: docker.io/lucagsd/sysdig # CHANGE this for draios
       SYSDIG_QUAY_IMAGE_BASE: TODO # fill this correctly
+      RELEASE: ${{ github.event.release.name }}
 
     steps:
       - name: Login to Docker Hub
@@ -50,6 +51,7 @@ jobs:
       REPOSITORY_DIR: rpm_repo
       PACKAGES_DIR: packages
       S3_BUCKET_NAME: lucag-test-personal
+      RELEASE: ${{ github.event.release.name }}
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
@@ -105,6 +107,7 @@ jobs:
       REPOSITORY_NAME: stable
       REPOSITORY_DIR: deb_repo
       PACKAGES_DIR: packages
+      RELEASE: ${{ github.event.release.name }}
     
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
