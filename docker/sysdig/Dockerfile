@@ -1,4 +1,5 @@
-FROM ghcr.io/draios/sysdig-builder:dev AS builder
+# FROM ghcr.io/draios/sysdig-builder:dev AS builder
+FROM ghcr.io/draios/sysdig-builder-pr:1799 AS builder
 
 ARG BUILD_VERSION=0.1.1dev
 ENV BUILD_VERSION=${BUILD_VERSION}
