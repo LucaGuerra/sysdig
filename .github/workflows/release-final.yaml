@@ -4,21 +4,6 @@ on:
     types: [published]
 
 jobs:
-  # upload-files:
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     BUILD_VERSION: ${{ github.ref_name }}
-  #     RELEASE: ${{ github.event.release.name }}
-  #     ARCH: x86_64
-  #   steps:
-  #     - name: Download targz
-  #       uses: dsaltares/fetch-gh-release-asset@master
-  #       with:
-  #         version: "tags/${{ env.RELEASE }}"
-  #         file: sysdig-${{ env.RELEASE }}-${{ env.ARCH }}.tar.gz
-  #         target: sysdig-${{ env.RELEASE }}-${{ env.ARCH }}.tar.gz
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-
   push-final-images:
     runs-on: ubuntu-latest
     env:
@@ -38,6 +23,7 @@ jobs:
         uses: akhilerm/tag-push-action@v2.0.0
         with:
           src: ${{ env.SYSDIG_IMAGE_BASE }}:${{ env.RELEASE }}-draft
+          # TODO add the full list of images
           dst: |
             ${{ env.SYSDIG_IMAGE_BASE }}:${{ env.RELEASE }}
             ${{ env.SYSDIG_DOCKERHUB_IMAGE_BASE }}:${{ env.RELEASE }}
@@ -108,6 +94,8 @@ jobs:
       REPOSITORY_DIR: deb_repo
       PACKAGES_DIR: packages
       RELEASE: ${{ github.event.release.name }}
+      S3_BUCKET_NAME: lucag-test-personal
+      KEY_ID: DCC6C4EF6455E261 # change this to EC51E8C4 later
     
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
@@ -118,6 +106,7 @@ jobs:
       - name: Install deps
         run: |
           sudo apt-get update && sudo apt-get -y install dpkg-dev gpg
+
       - name: Checkout Sysdig
         uses: actions/checkout@v2
         with:
@@ -144,12 +133,42 @@ jobs:
 
       - name: Import private key
         env:
-          PRIVATE_KEY: ${{ secrets.TEST_PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: printenv PRIVATE_KEY | gpg --import -
 
       - name: Release DEBs
         env:
           SCRIPTS_DIR: sysdig/scripts/release
-          S3_BUCKET_NAME: lucag-test-personal
-          KEY_ID: DCC6C4EF6455E261 # change this to EC51E8C4 later
         run: sysdig/scripts/release/release_deb.sh
+  
+  release-tgz:
+    runs-on: ubuntu-latest
+    env:
+      BASEARCH: x86_64
+      REPOSITORY_NAME: stable
+      REPOSITORY_DIR: tgz_repo
+      PACKAGES_DIR: packages
+      RELEASE: ${{ github.event.release.name }}
+      S3_BUCKET_NAME: lucag-test-personal
+    steps:
+      - name: Checkout Sysdig
+        uses: actions/checkout@v2
+        with:
+          path: sysdig
+
+      - name: Download targz
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: "tags/${{ env.RELEASE }}"
+          file: sysdig-${{ env.RELEASE }}-${{ env.RELEASE_ARCH }}.tar.gz
+          target: ${{ env.PACKAGES_DIR }}/sysdig-${{ env.RELEASE }}-${{ env.RELEASE_ARCH }}.tar.gz
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+      
+      - name: Release tar.gz
+        run: sysdig/scripts/release/release_tgz.sh

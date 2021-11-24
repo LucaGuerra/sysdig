@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# change 3
-
 set -euxo pipefail
 
 echo "REPOSITORY_DIR: $REPOSITORY_DIR"
