@@ -157,6 +157,12 @@ jobs:
       PACKAGES_DIR: packages
       RELEASE: ${{ github.event.release.name }}
       S3_BUCKET_NAME: lucag-test-personal
+
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
