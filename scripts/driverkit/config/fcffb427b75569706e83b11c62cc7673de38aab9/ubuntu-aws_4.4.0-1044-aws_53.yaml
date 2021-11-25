@@ -1,5 +1,0 @@
-kernelversion: 53
-kernelrelease: 4.4.0-1044-aws
-target: ubuntu-aws
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.4.0-1044-aws_53.ko

@@ -1,6 +1,0 @@
-kernelversion: 30
-kernelrelease: 4.15.0-1029-aws
-target: ubuntu-aws
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.15.0-1029-aws_30.ko
-  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.15.0-1029-aws_30.o

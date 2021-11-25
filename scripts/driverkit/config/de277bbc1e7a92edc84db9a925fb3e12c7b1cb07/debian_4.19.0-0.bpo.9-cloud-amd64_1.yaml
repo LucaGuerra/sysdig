@@ -1,0 +1,6 @@
+kernelversion: 1
+kernelrelease: 4.19.0-0.bpo.9-cloud-amd64
+target: debian
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_debian_4.19.0-0.bpo.9-cloud-amd64_1.ko
+  probe: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_debian_4.19.0-0.bpo.9-cloud-amd64_1.o

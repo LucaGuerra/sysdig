@@ -1,0 +1,5 @@
+kernelversion: 1
+kernelrelease: 4.9.0-13-amd64
+target: debian
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_debian_4.9.0-13-amd64_1.ko

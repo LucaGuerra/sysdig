@@ -1,0 +1,5 @@
+kernelversion: 1
+kernelrelease: 4.14.165-131.185.amzn2.x86_64
+target: amazonlinux2
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_amazonlinux2_4.14.165-131.185.amzn2.x86_64_1.ko

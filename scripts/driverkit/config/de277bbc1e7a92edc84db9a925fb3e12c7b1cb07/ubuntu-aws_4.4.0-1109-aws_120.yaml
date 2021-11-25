@@ -1,0 +1,5 @@
+kernelversion: 120
+kernelrelease: 4.4.0-1109-aws
+target: ubuntu-aws
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_ubuntu-aws_4.4.0-1109-aws_120.ko

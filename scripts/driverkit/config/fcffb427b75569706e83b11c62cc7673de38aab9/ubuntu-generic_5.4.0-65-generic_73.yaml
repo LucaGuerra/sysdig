@@ -1,6 +1,0 @@
-kernelversion: 73
-kernelrelease: 5.4.0-65-generic
-target: ubuntu-generic
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_5.4.0-65-generic_73.ko
-  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_5.4.0-65-generic_73.o

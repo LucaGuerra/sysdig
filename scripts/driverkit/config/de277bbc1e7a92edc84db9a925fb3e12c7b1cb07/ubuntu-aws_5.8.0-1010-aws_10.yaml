@@ -1,0 +1,6 @@
+kernelversion: 10
+kernelrelease: 5.8.0-1010-aws
+target: ubuntu-aws
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_ubuntu-aws_5.8.0-1010-aws_10.ko
+  probe: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_ubuntu-aws_5.8.0-1010-aws_10.o

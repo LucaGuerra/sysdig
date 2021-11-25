@@ -1,6 +1,0 @@
-kernelversion: 1
-kernelrelease: 4.19.0-16-amd64
-target: debian
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_debian_4.19.0-16-amd64_1.ko
-  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_debian_4.19.0-16-amd64_1.o

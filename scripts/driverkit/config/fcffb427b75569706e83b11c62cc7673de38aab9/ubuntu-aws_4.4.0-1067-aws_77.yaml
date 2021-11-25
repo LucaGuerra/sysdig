@@ -1,5 +1,0 @@
-kernelversion: 77
-kernelrelease: 4.4.0-1067-aws
-target: ubuntu-aws
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.4.0-1067-aws_77.ko

@@ -1,5 +1,0 @@
-kernelversion: 85
-kernelrelease: 4.4.0-1075-aws
-target: ubuntu-aws
-output:
-  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.4.0-1075-aws_85.ko

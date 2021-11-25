@@ -1,0 +1,6 @@
+kernelversion: 60
+kernelrelease: 4.15.0-1058-aws
+target: ubuntu-aws
+output:
+  module: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_ubuntu-aws_4.15.0-1058-aws_60.ko
+  probe: output/de277bbc1e7a92edc84db9a925fb3e12c7b1cb07//sysdig_ubuntu-aws_4.15.0-1058-aws_60.o
