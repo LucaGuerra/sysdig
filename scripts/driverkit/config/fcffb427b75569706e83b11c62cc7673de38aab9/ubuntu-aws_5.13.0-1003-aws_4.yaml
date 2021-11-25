@@ -1,0 +1,6 @@
+kernelversion: 4
+kernelrelease: 5.13.0-1003-aws
+target: ubuntu-aws
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_5.13.0-1003-aws_4.ko
+  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_5.13.0-1003-aws_4.o

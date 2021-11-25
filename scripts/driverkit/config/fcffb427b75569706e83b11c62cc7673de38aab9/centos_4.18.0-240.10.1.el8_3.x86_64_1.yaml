@@ -1,0 +1,5 @@
+kernelversion: 1
+kernelrelease: 4.18.0-240.10.1.el8_3.x86_64
+target: centos
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_centos_4.18.0-240.10.1.el8_3.x86_64_1.ko

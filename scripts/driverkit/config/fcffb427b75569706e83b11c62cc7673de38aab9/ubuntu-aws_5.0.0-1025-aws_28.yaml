@@ -1,0 +1,6 @@
+kernelversion: 28
+kernelrelease: 5.0.0-1025-aws
+target: ubuntu-aws
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_5.0.0-1025-aws_28.ko
+  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_5.0.0-1025-aws_28.o

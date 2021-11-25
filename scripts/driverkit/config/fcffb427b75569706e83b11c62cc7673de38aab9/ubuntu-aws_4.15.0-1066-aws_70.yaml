@@ -1,0 +1,6 @@
+kernelversion: 70
+kernelrelease: 4.15.0-1066-aws
+target: ubuntu-aws
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.15.0-1066-aws_70.ko
+  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-aws_4.15.0-1066-aws_70.o

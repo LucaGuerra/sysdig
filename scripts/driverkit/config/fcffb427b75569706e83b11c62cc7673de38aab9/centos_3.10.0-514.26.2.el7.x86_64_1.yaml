@@ -1,0 +1,5 @@
+kernelversion: 1
+kernelrelease: 3.10.0-514.26.2.el7.x86_64
+target: centos
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_centos_3.10.0-514.26.2.el7.x86_64_1.ko

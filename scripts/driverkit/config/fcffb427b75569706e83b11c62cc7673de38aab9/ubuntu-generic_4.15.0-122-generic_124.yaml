@@ -1,0 +1,6 @@
+kernelversion: 124
+kernelrelease: 4.15.0-122-generic
+target: ubuntu-generic
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_4.15.0-122-generic_124.ko
+  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_4.15.0-122-generic_124.o

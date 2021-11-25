@@ -1,0 +1,6 @@
+kernelversion: 107
+kernelrelease: 4.15.0-106-generic
+target: ubuntu-generic
+output:
+  module: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_4.15.0-106-generic_107.ko
+  probe: output/fcffb427b75569706e83b11c62cc7673de38aab9/sysdig_ubuntu-generic_4.15.0-106-generic_107.o
