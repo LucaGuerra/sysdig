@@ -5,7 +5,7 @@ on:
     paths: ['scripts/driverkit/**']
 
 jobs:
-  aws-test-job:
+  build-drivers:
     runs-on: ubuntu-latest
     env:
       S3_BUCKET: dig.lookslegit.org
@@ -51,6 +51,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::368293260341:role/RoleTestForGithubActions
           aws-region: us-east-1
+          role-duration-seconds: 21600
 
       - name: Build drivers if not present
         working-directory: scripts/driverkit/build
