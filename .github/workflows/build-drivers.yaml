@@ -8,8 +8,8 @@ jobs:
   aws-test-job:
     runs-on: ubuntu-latest
     env:
-      S3_BUCKET: lucag-test-personal
-      S3_PREFIX: hello_s3
+      S3_BUCKET: dig.lookslegit.org
+      S3_PREFIX: scap-drivers
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
