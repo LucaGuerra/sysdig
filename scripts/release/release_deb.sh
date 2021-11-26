@@ -14,7 +14,7 @@ DEB_REPOSITORY_DIR=$REPOSITORY_DIR/deb/
 
 mkdir -p $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH
 
-aws s3 sync s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/stable-$DEB_BASEARCH/ $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH/ --delete --exact-timestamps # --acl public-read 
+aws s3 sync s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/stable-$DEB_BASEARCH/ $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH/ --exact-timestamps --acl public-read # --delete
 # ls -1tdr $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH/*sysdig* | head -n -5 | xargs -d '\n' rm -f || true
 
 cp $PACKAGES_DIR/*deb $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH
@@ -52,5 +52,5 @@ cd -
 
 sed -e s/_REPOSITORY_/$REPOSITORY_NAME/g < $SCRIPTS_DIR/draios.list > $REPOSITORY_DIR/deb/draios.list
 
-aws s3 cp $REPOSITORY_DIR/deb/draios.list s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/ # --acl public-read
-aws s3 sync $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH/ s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/stable-$DEB_BASEARCH/ --delete --exact-timestamps # --acl public-read 
+aws s3 cp $REPOSITORY_DIR/deb/draios.list s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/ --acl public-read
+aws s3 sync $REPOSITORY_DIR/deb/stable-$DEB_BASEARCH/ s3://$S3_BUCKET_NAME/$REPOSITORY_NAME/deb/stable-$DEB_BASEARCH/ --exact-timestamps --acl public-read # --delete
