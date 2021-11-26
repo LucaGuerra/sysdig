@@ -142,6 +142,13 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 		set(PROBE_VERSION "${FALCOSECURITY_LIBS_VERSION}")
 	endif()
 
+	if(NOT DEFINED PROBE_NAME)
+		set(PROBE_NAME "scap")
+	endif()
+
+	# DO NOT LEAVE THE NEXT LINE LIKE THIS -- LIKE ABSOLUTELY
+	set(DRIVERS_REPO "http://dig.lookslegit.org.s3-website-us-east-1.amazonaws.com/scap-drivers") # OBVIOUSLY -- TODO -- CHANGE THIS -- THIS SHALL BE CHANGED
+	
 	add_subdirectory(scripts)
 endif()
 
