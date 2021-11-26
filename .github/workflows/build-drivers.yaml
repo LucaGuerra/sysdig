@@ -8,8 +8,8 @@ jobs:
   build-drivers:
     runs-on: ubuntu-latest
     env:
-      S3_BUCKET: download.draios.com
-      S3_PREFIX: stable/sysdig-drivers
+      S3_BUCKET: www.draios.com-test2
+      S3_PREFIX: scap-drivers
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
@@ -49,7 +49,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@fcd8bb1e0a3c9d2a0687615ee31d34d8aea18a96
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-to-assume: ${{ secrets.DRAIOS_AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
           # This timeout is longer because the complete job may take at least 4 hours to complete
           role-duration-seconds: 21600
