@@ -10,9 +10,7 @@ jobs:
     env:
       BUILD_VERSION: ${{ github.ref_name }}
     container:
-      # TEMP CHANGE!!!
-      # image: ghcr.io/draios/sysdig-builder:dev # CHANGE this for draios
-      image: ghcr.io/draios/sysdig-builder-pr:1799
+      image: ghcr.io/draios/sysdig-builder:dev
     steps:
       - name: Checkout Sysdig
         uses: actions/checkout@v2
