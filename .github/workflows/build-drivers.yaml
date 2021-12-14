@@ -62,7 +62,7 @@ jobs:
       - name: Build drivers if not present
         working-directory: scripts/driverkit/build
         run: | 
-          poetry run python build.py ../config \
+          poetry run python build.py ../config_small \
           --driverkit ../../../driverkit-repo/driverkit \
           --s3-bucket ${{ env.S3_BUCKET }} --s3-prefix ${{ env.S3_PREFIX }} \
-          ${{ (github.event_name == 'workflow_dispatch') && (github.event.inputs.rebuild == 'true') && '--rebuild' }}
+          ${{ (github.event_name == 'workflow_dispatch') && (github.event.inputs.rebuild == 'true') && '--rebuild' || '' }}
