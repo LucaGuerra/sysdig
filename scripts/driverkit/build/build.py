@@ -48,6 +48,9 @@ def main():
     ap.add_argument('--rebuild', action='store_true', help='Rebuild all drivers, including the ones already present on S3')
     args = ap.parse_args()
 
+    if args.rebuild:
+        print(f"[*] A full rebuild has been requested. This may take a while ...")
+
     config_dir = Path(args.config_dir)
     if not config_dir.exists():
         print(f"[-] config directory does not exist: {config_dir}")
