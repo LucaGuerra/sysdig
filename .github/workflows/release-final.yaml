@@ -151,6 +151,7 @@ jobs:
   release-tgz:
     runs-on: ubuntu-latest
     env:
+      RELEASE_ARCH: x86_64
       BASEARCH: x86_64
       REPOSITORY_NAME: stable
       REPOSITORY_DIR: tgz_repo

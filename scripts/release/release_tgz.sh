@@ -11,5 +11,5 @@ echo "PACKAGES_DIR: $PACKAGES_DIR"
 mkdir -p $REPOSITORY_DIR/tgz/$BASEARCH
 
 for tgz_file in $PACKAGES_DIR/*tar.gz; do
-    aws s3 cp "$tgz_file" s3://$S3_BUCKET/$REPOSITORY_NAME/tgz/$BASEARCH --acl public-read
+    aws s3 cp "$tgz_file" s3://$S3_BUCKET/$REPOSITORY_NAME/tgz/$BASEARCH/ --acl public-read
 done
