@@ -16,8 +16,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Login to Github Packages
         uses: docker/login-action@v1
@@ -43,7 +43,7 @@ jobs:
       REPOSITORY_NAME: stable
       REPOSITORY_DIR: rpm_repo
       PACKAGES_DIR: packages
-      S3_BUCKET_NAME: lucag-test-personal
+      S3_BUCKET: lucag-test-personal
       RELEASE: ${{ github.event.release.name }}
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
@@ -101,7 +101,7 @@ jobs:
       REPOSITORY_DIR: deb_repo
       PACKAGES_DIR: packages
       RELEASE: ${{ github.event.release.name }}
-      S3_BUCKET_NAME: lucag-test-personal
+      S3_BUCKET: lucag-test-personal
       KEY_ID: DCC6C4EF6455E261 # change this to EC51E8C4 later
     
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
@@ -156,7 +156,7 @@ jobs:
       REPOSITORY_DIR: tgz_repo
       PACKAGES_DIR: packages
       RELEASE: ${{ github.event.release.name }}
-      S3_BUCKET_NAME: lucag-test-personal
+      S3_BUCKET: lucag-test-personal
 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
